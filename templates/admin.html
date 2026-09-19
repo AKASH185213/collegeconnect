@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Faculty Dashboard | CollegeConnect</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        /* ================= ADMIN DASHBOARD ================= */
+
+        .admin-page {
+            min-height: 100vh;
+            background: #f4f7f8;
+        }
+
+        .admin-topbar {
+            background: #073d42;
+            color: white;
+            border-bottom: 1px solid #0d5960;
+        }
+
+        .admin-topbar-inner {
+            max-width: 1250px;
+            min-height: 82px;
+            margin: auto;
+            padding: 0 28px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 25px;
+        }
+
+        .admin-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .admin-brand img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            background: white;
+            border-radius: 10px;
+            padding: 4px;
+        }
+
+        .admin-brand-text strong {
+            display: block;
+            font-size: 20px;
+            letter-spacing: -0.3px;
+        }
+
+        .admin-brand-text span {
+            display: block;
+            margin-top: 1px;
+            color: #9bd6d5;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.7px;
+            text-transform: uppercase;
+        }
+
+        .admin-user-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .admin-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-user-icon {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+
+            font-size: 17px;
+        }
+
+        .admin-user small {
+            display: block;
+            color: #9bd6d5;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .admin-user strong {
+            display: block;
+            margin-top: 1px;
+            font-size: 13px;
+        }
+
+        .session-timer {
+            padding: 9px 13px;
+
+            color: #d8eeee;
+            background: rgba(255,255,255,0.09);
+
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 8px;
+
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        #session-countdown {
+            margin-left: 4px;
+            color: #8ce3df;
+            font-variant-numeric: tabular-nums;
+        }
+
+
+        /* ================= DASHBOARD ================= */
+
+        .admin-main {
+            max-width: 1250px;
+            margin: auto;
+            padding: 55px 28px 70px;
+        }
+
+        .admin-welcome {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+
+            gap: 25px;
+            margin-bottom: 38px;
+        }
+
+        .admin-welcome-label {
+            display: inline-block;
+            margin-bottom: 8px;
+
+            color: #007c83;
+
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .admin-welcome h1 {
+            color: #17282c;
+
+            font-size: clamp(32px, 5vw, 48px);
+            line-height: 1.1;
+            letter-spacing: -1.4px;
+        }
+
+        .admin-welcome h1 span {
+            color: #007c83;
+        }
+
+        .admin-welcome p {
+            max-width: 650px;
+            margin-top: 11px;
+
+            color: #68787d;
+            font-size: 15px;
+        }
+
+        .dashboard-status {
+            flex-shrink: 0;
+
+            padding: 13px 17px;
+
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            background: white;
+            border: 1px solid #dce7e8;
+            border-radius: 10px;
+
+            color: #526469;
+            font-size: 12px;
+            font-weight: 700;
+
+            box-shadow: 0 5px 18px rgba(25,50,55,0.05);
+        }
+
+        .status-dot {
+            width: 9px;
+            height: 9px;
+
+            border-radius: 50%;
+            background: #28a56b;
+
+            box-shadow: 0 0 0 4px rgba(40,165,107,0.12);
+        }
+
+
+        /* ================= MANAGEMENT GRID ================= */
+
+        .admin-grid {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .admin-card {
+            position: relative;
+
+            min-height: 250px;
+
+            padding: 27px;
+
+            display: flex;
+            flex-direction: column;
+
+            background: white;
+
+            border: 1px solid #dfe8ea;
+            border-radius: 16px;
+
+            box-shadow: 0 7px 25px rgba(26,52,57,0.055);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+        .admin-card:hover {
+            transform: translateY(-6px);
+
+            border-color: #9dd1d2;
+
+            box-shadow:
+                0 17px 40px rgba(26,52,57,0.12);
+        }
+
+        .admin-card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .admin-icon {
+            width: 56px;
+            height: 56px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #edf7f7;
+
+            border: 1px solid #dceced;
+            border-radius: 13px;
+
+            font-size: 25px;
+        }
+
+        .admin-card-number {
+            color: #c3d1d3;
+
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .admin-card h2 {
+            margin-top: 20px;
+
+            color: #203338;
+
+            font-size: 20px;
+            line-height: 1.2;
+        }
+
+        .admin-card p {
+            margin-top: 8px;
+
+            color: #748388;
+
+            font-size: 13px;
+            line-height: 1.65;
+        }
+
+        .admin-actions {
+            margin-top: auto;
+            padding-top: 22px;
+
+            display: flex;
+            gap: 9px;
+        }
+
+        .admin-actions a {
+            flex: 1;
+
+            min-height: 40px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            transition: 0.2s ease;
+        }
+
+        .admin-add {
+            color: white;
+            background: #007c83;
+        }
+
+        .admin-add:hover {
+            background: #005f65;
+            transform: translateY(-1px);
+        }
+
+        .admin-view {
+            color: #007c83;
+            background: #edf7f7;
+            border: 1px solid #d4e8e9;
+        }
+
+        .admin-view:hover {
+            color: white;
+            background: #007c83;
+            transform: translateY(-1px);
+        }
+
+
+        /* ================= BOTTOM AREA ================= */
+
+        .admin-bottom {
+            margin-top: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 22px 25px;
+
+            background: #eaf3f3;
+
+            border: 1px solid #d5e5e6;
+            border-radius: 13px;
+        }
+
+        .admin-bottom-text strong {
+            display: block;
+
+            color: #294247;
+
+            font-size: 14px;
+        }
+
+        .admin-bottom-text span {
+            display: block;
+
+            margin-top: 3px;
+
+            color: #728287;
+
+            font-size: 12px;
+        }
+
+        .logout-button {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-height: 42px;
+
+            padding: 0 22px;
+
+            color: #9a4141;
+
+            background: white;
+
+            border: 1px solid #e7cccc;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            transition: 0.2s ease;
+        }
+
+        .logout-button:hover {
+            color: white;
+            background: #a84b4b;
+            border-color: #a84b4b;
+            transform: translateY(-1px);
+        }
+
+
+        /* ================= SESSION WARNING ================= */
+
+        .session-warning {
+            display: none;
+
+            position: fixed;
+
+            left: 50%;
+            top: 50%;
+
+            transform: translate(-50%, -50%);
+
+            z-index: 5000;
+
+            width: min(430px, calc(100% - 35px));
+
+            padding: 32px;
+
+            text-align: center;
+
+            background: white;
+
+            border: 1px solid #dce6e7;
+            border-radius: 17px;
+
+            box-shadow:
+                0 25px 70px rgba(0,0,0,0.25);
+        }
+
+        .session-warning::before {
+            content: "";
+
+            position: fixed;
+
+            z-index: -1;
+
+            left: 50%;
+            top: 50%;
+
+            width: 100vw;
+            height: 100vh;
+
+            transform: translate(-50%, -50%);
+
+            background: rgba(7,61,66,0.55);
+        }
+
+        .session-warning h2 {
+            color: #23363a;
+
+            font-size: 23px;
+        }
+
+        .session-warning > p {
+            margin-top: 9px;
+
+            color: #718085;
+
+            font-size: 13px;
+        }
+
+        #countdown {
+            margin: 18px 0;
+
+            color: #007c83;
+
+            font-size: 36px;
+            font-weight: 800;
+
+            font-variant-numeric: tabular-nums;
+        }
+
+        .session-buttons {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            margin-top: 20px;
+        }
+
+        .session-buttons form {
+            flex: 1;
+        }
+
+        .session-buttons button {
+            width: 100%;
+
+            min-height: 42px;
+
+            padding: 0 14px;
+
+            border: none;
+            border-radius: 8px;
+
+            color: white;
+            background: #007c83;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .session-buttons a {
+            flex: 1;
+        }
+
+        .session-buttons a button {
+            color: #8f4141;
+            background: #fff1f1;
+
+            border: 1px solid #f0d2d2;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1050px) {
+
+            .admin-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .admin-topbar-inner {
+                flex-direction: column;
+                align-items: stretch;
+
+                padding-top: 16px;
+                padding-bottom: 16px;
+            }
+
+            .admin-user-area {
+                justify-content: space-between;
+            }
+        }
+
+
+        @media (max-width: 620px) {
+
+            .admin-topbar-inner {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .admin-brand img {
+                width: 45px;
+                height: 45px;
+            }
+
+            .admin-brand-text strong {
+                font-size: 18px;
+            }
+
+            .admin-user-area {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .session-timer {
+                width: 100%;
+                text-align: center;
+            }
+
+            .admin-main {
+                padding: 38px 20px 55px;
+            }
+
+            .admin-welcome {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .dashboard-status {
+                align-self: flex-start;
+            }
+
+            .admin-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-card {
+                min-height: 235px;
+            }
+
+            .admin-bottom {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .logout-button {
+                width: 100%;
+            }
+
+            .session-buttons {
+                flex-direction: column;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body class="admin-page">
+
+
+<!-- ================= TOP BAR ================= -->
+
+<header class="admin-topbar">
+
+    <div class="admin-topbar-inner">
+
+
+        <div class="admin-brand">
+
+            <img
+                src="{{ url_for('static', filename='college_logo.png') }}"
+                alt="Adarsh Educational Institutions"
+            >
+
+            <div class="admin-brand-text">
+
+                <strong>
+                    CollegeConnect
+                </strong>
+
+                <span>
+                    Faculty Control Center
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="admin-user-area">
+
+
+            <div class="admin-user">
+
+                <div class="admin-user-icon">
+                    👨‍🏫
+                </div>
+
+                <div>
+
+                    <small>
+                        Logged in as
+                    </small>
+
+                    <strong>
+                        {{ username }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="session-timer">
+
+                ⏱️ Session
+
+                <span id="session-countdown">
+                    02:30:00
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ================= MAIN DASHBOARD ================= -->
+
+<main class="admin-main">
+
+
+    <section class="admin-welcome">
+
+        <div>
+
+            <span class="admin-welcome-label">
+                ADARSH EDUCATIONAL INSTITUTIONS
+            </span>
+
+            <h1>
+                Faculty <span>Dashboard</span>
+            </h1>
+
+            <p>
+                Manage and publish important college information
+                for students through CollegeConnect.
+            </p>
+
+        </div>
+
+
+        <div class="dashboard-status">
+
+            <span class="status-dot"></span>
+
+            Dashboard Active
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= MANAGEMENT CARDS ================= -->
+
+    <section class="admin-grid">
+
+
+        <!-- ANNOUNCEMENTS -->
+
+        <article class="admin-card">
+
+            <div class="admin-card-top">
+
+                <div class="admin-icon">
+                    📢
+                </div>
+
+                <span class="admin-card-number">
+                    01
+                </span>
+
+            </div>
+
+            <h2>
+                Announcements
+            </h2>
+
+            <p>
+                Publish important college notices,
+                updates and messages for students.
+            </p>
+
+            <div class="admin-actions">
+
+                <a
+                    href="/add-announcement"
+                    class="admin-add"
+                >
+                    + Add
+                </a>
+
+                <a
+                    href="/announcements"
+                    class="admin-view"
+                >
+                    View
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- EVENTS -->
+
+        <article class="admin-card">
+
+            <div class="admin-card-top">
+
+                <div class="admin-icon">
+                    🎉
+                </div>
+
+                <span class="admin-card-number">
+                    02
+                </span>
+
+            </div>
+
+            <h2>
+                Events
+            </h2>
+
+            <p>
+                Create and publish upcoming college
+                events and student activities.
+            </p>
+
+            <div class="admin-actions">
+
+                <a
+                    href="/add-event"
+                    class="admin-add"
+                >
+                    + Add
+                </a>
+
+                <a
+                    href="/events"
+                    class="admin-view"
+                >
+                    View
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- HOLIDAYS -->
+
+        <article class="admin-card">
+
+            <div class="admin-card-top">
+
+                <div class="admin-icon">
+                    🏖️
+                </div>
+
+                <span class="admin-card-number">
+                    03
+                </span>
+
+            </div>
+
+            <h2>
+                Holidays
+            </h2>
+
+            <p>
+                Add and maintain the official college
+                holiday information.
+            </p>
+
+            <div class="admin-actions">
+
+                <a
+                    href="/add-holiday"
+                    class="admin-add"
+                >
+                    + Add
+                </a>
+
+                <a
+                    href="/holidays"
+                    class="admin-view"
+                >
+                    View
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- EXAMS -->
+
+        <article class="admin-card">
+
+            <div class="admin-card-top">
+
+                <div class="admin-icon">
+                    📝
+                </div>
+
+                <span class="admin-card-number">
+                    04
+                </span>
+
+            </div>
+
+            <h2>
+                Exam Timetable
+            </h2>
+
+            <p>
+                Add examination dates, subjects and
+                important exam schedule information.
+            </p>
+
+            <div class="admin-actions">
+
+                <a
+                    href="/add-exam"
+                    class="admin-add"
+                >
+                    + Add
+                </a>
+
+                <a
+                    href="/exams"
+                    class="admin-view"
+                >
+                    View
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- CLASS TIMETABLE -->
+
+        <article class="admin-card">
+
+            <div class="admin-card-top">
+
+                <div class="admin-icon">
+                    🕐
+                </div>
+
+                <span class="admin-card-number">
+                    05
+                </span>
+
+            </div>
+
+            <h2>
+                Class Timetable
+            </h2>
+
+            <p>
+                Manage weekly class schedules,
+                subjects, faculty and rooms.
+            </p>
+
+            <div class="admin-actions">
+
+                <a
+                    href="/add-timetable"
+                    class="admin-add"
+                >
+                    + Add
+                </a>
+
+                <a
+                    href="/timetable"
+                    class="admin-view"
+                >
+                    View
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- DOCUMENTS -->
+
+        <article class="admin-card">
+
+            <div class="admin-card-top">
+
+                <div class="admin-icon">
+                    📄
+                </div>
+
+                <span class="admin-card-number">
+                    06
+                </span>
+
+            </div>
+
+            <h2>
+                Documents
+            </h2>
+
+            <p>
+                Add important college documents,
+                resources and useful links.
+            </p>
+
+            <div class="admin-actions">
+
+                <a
+                    href="/add-document"
+                    class="admin-add"
+                >
+                    + Add
+                </a>
+
+                <a
+                    href="/documents"
+                    class="admin-view"
+                >
+                    View
+                </a>
+
+            </div>
+
+        </article>
+
+
+    </section>
+
+
+    <!-- ================= BOTTOM BAR ================= -->
+
+    <section class="admin-bottom">
+
+        <div class="admin-bottom-text">
+
+            <strong>
+                CollegeConnect Faculty Control Center
+            </strong>
+
+            <span>
+                Keep students informed with accurate and timely
+                college information.
+            </span>
+
+        </div>
+
+
+        <a
+            href="/logout"
+            class="logout-button"
+        >
+            🚪 Logout
+        </a>
+
+    </section>
+
+
+    <!-- ================= SESSION WARNING ================= -->
+
+    <div
+        id="session-warning"
+        class="session-warning"
+    >
+
+        <h2>
+            ⏰ Session Expiring
+        </h2>
+
+        <p>
+            Your faculty session will expire in:
+        </p>
+
+        <div id="countdown">
+            05:00
+        </div>
+
+        <p>
+            Do you want to continue your session?
+        </p>
+
+
+        <div class="session-buttons">
+
+
+            <form
+                method="POST"
+                action="/continue-session"
+            >
+
+                <button type="submit">
+                    Continue Session
+                </button>
+
+            </form>
+
+
+            <a href="/logout">
+
+                <button type="button">
+                    Logout
+                </button>
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+</main>
+
+
+<!-- ================= SESSION SCRIPT ================= -->
+
+<script>
+
+    const loginTime = {{ login_time }};
+
+    const sessionDuration = 9000;
+
+    const warningTime = 300;
+
+
+    function checkSession() {
+
+        const currentTime =
+            Math.floor(Date.now() / 1000);
+
+        const elapsed =
+            Math.floor(currentTime - loginTime);
+
+        const remaining =
+            Math.floor(sessionDuration - elapsed);
+
+
+        /*
+         * Main 2 hour 30 minute countdown
+         */
+
+        if (remaining > 0) {
+
+            let hours =
+                Math.floor(remaining / 3600);
+
+            let minutes =
+                Math.floor((remaining % 3600) / 60);
+
+            let seconds =
+                remaining % 60;
+
+
+            document.getElementById(
+                "session-countdown"
+            ).textContent =
+
+                String(hours).padStart(2, "0") + ":" +
+
+                String(minutes).padStart(2, "0") + ":" +
+
+                String(seconds).padStart(2, "0");
+
+        }
+
+
+        /*
+         * Five minute warning
+         */
+
+        const warningBox =
+            document.getElementById(
+                "session-warning"
+            );
+
+
+        if (
+            remaining <= warningTime &&
+            remaining > 0
+        ) {
+
+            warningBox.style.display = "block";
+
+
+            let warningMinutes =
+                Math.floor(remaining / 60);
+
+            let warningSeconds =
+                remaining % 60;
+
+
+            document.getElementById(
+                "countdown"
+            ).textContent =
+
+                String(warningMinutes).padStart(2, "0") + ":" +
+
+                String(warningSeconds).padStart(2, "0");
+
+        }
+
+
+        /*
+         * Automatic logout
+         */
+
+        if (remaining <= 0) {
+
+            window.location.href =
+                "/logout";
+
+        }
+
+    }
+
+
+    setInterval(checkSession, 1000);
+
+    checkSession();
+
+</script>
+
+
+</body>
+
+</html>

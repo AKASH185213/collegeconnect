@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Event - CollegeConnect</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .form-navigation {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .dashboard-back,
+        .section-back {
+            display: inline-block;
+            padding: 11px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .dashboard-back {
+            background: #0f766e;
+            color: white;
+        }
+
+        .section-back {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .dashboard-back:hover,
+        .section-back:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🎉 Add College Event</h1>
+    <p>Create a new event</p>
+</header>
+
+<main>
+
+    <div class="form-navigation">
+
+        <a href="/admin" class="dashboard-back">
+            ← Back to Faculty Dashboard
+        </a>
+
+        <a href="/events" class="section-back">
+            View Events
+        </a>
+
+    </div>
+
+    <div class="form-box">
+
+        <h2>Create Event</h2>
+
+        <form method="POST">
+
+            <label>Event Name</label>
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Example: Freshers Day"
+                required
+            >
+
+            <label>Date</label>
+
+            <input
+                type="date"
+                name="date"
+                required
+            >
+
+            <label>Time</label>
+
+            <input
+                type="time"
+                name="time"
+                required
+            >
+
+            <label>Location</label>
+
+            <input
+                type="text"
+                name="location"
+                placeholder="Example: College Auditorium"
+                required
+            >
+
+            <label>Description</label>
+
+            <textarea
+                name="description"
+                placeholder="Describe the event..."
+                required
+            ></textarea>
+
+            <label>Organized By</label>
+
+            <input
+                type="text"
+                name="organized_by"
+                placeholder="Example: CSE Department"
+                required
+            >
+
+            <button type="submit">
+                Publish Event
+            </button>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+</html>

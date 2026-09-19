@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Announcement - CollegeConnect</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .form-navigation {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .dashboard-back,
+        .section-back {
+            display: inline-block;
+            padding: 11px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .dashboard-back {
+            background: #0f766e;
+            color: white;
+        }
+
+        .section-back {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .dashboard-back:hover,
+        .section-back:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>📢 Add Announcement</h1>
+    <p>Publish an important college update</p>
+</header>
+
+<main>
+
+    <div class="form-navigation">
+
+        <a href="/admin" class="dashboard-back">
+            ← Back to Faculty Dashboard
+        </a>
+
+        <a href="/announcements" class="section-back">
+            View Announcements
+        </a>
+
+    </div>
+
+    <div class="form-box">
+
+        <h2>Create Announcement</h2>
+
+        <form method="POST">
+
+            <label>Announcement Title</label>
+
+            <input
+                type="text"
+                name="title"
+                placeholder="Enter announcement title"
+                required
+            >
+
+            <label>Announcement Details</label>
+
+            <textarea
+                name="content"
+                placeholder="Enter announcement details"
+                required
+            ></textarea>
+
+            <label>Posted By</label>
+
+            <input
+                type="text"
+                name="posted_by"
+                placeholder="Faculty / Management"
+                required
+            >
+
+            <button type="submit">
+                Publish Announcement
+            </button>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+</html>

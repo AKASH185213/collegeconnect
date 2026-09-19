@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Exam - CollegeConnect</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .form-navigation {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .dashboard-back,
+        .section-back {
+            display: inline-block;
+            padding: 11px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .dashboard-back {
+            background: #0f766e;
+            color: white;
+        }
+
+        .section-back {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .dashboard-back:hover,
+        .section-back:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>📝 Add Exam</h1>
+    <p>Add an examination to the timetable</p>
+</header>
+
+<main>
+
+    <div class="form-navigation">
+
+        <a href="/admin" class="dashboard-back">
+            ← Back to Faculty Dashboard
+        </a>
+
+        <a href="/exams" class="section-back">
+            View Exam Timetable
+        </a>
+
+    </div>
+
+    <div class="form-box">
+
+        <h2>Create Exam Schedule</h2>
+
+        <form method="POST">
+
+            <label>Subject</label>
+
+            <input
+                type="text"
+                name="subject"
+                placeholder="Example: Engineering Mathematics-I"
+                required
+            >
+
+            <label>Date</label>
+
+            <input
+                type="date"
+                name="date"
+                required
+            >
+
+            <label>Time</label>
+
+            <input
+                type="time"
+                name="time"
+                required
+            >
+
+            <label>Room</label>
+
+            <input
+                type="text"
+                name="room"
+                placeholder="Example: Room 101"
+                required
+            >
+
+            <label>Exam Type</label>
+
+            <select name="exam_type" required>
+
+                <option value="">Select exam type</option>
+                <option value="Mid Exam">Mid Exam</option>
+                <option value="Semester Exam">Semester Exam</option>
+                <option value="Internal Exam">Internal Exam</option>
+                <option value="Practical Exam">Practical Exam</option>
+
+            </select>
+
+            <button type="submit">
+                Add Exam
+            </button>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+</html>

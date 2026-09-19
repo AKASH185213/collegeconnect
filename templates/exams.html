@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Exam Timetable - CollegeConnect</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <h1>📝 Exam Timetable</h1>
+    <p>Upcoming examination schedule</p>
+</header>
+
+<main>
+
+    <a href="/" class="back">
+        ← Back to Dashboard
+    </a>
+
+    <div class="announcement-header">
+
+        <h2>Exam Schedule</h2>
+
+        {% if session.get("username") %}
+        <a href="/add-exam" class="add-button">
+            + Add Exam
+        </a>
+        {% endif %}
+
+    </div>
+
+    {% if exams %}
+
+        {% for exam in exams %}
+
+        <div class="announcement">
+
+            <h3>📚 {{ exam["subject"] }}</h3>
+
+            <p>
+                📅 <strong>Date:</strong> {{ exam["date"] }}
+            </p>
+
+            <p>
+                🕐 <strong>Time:</strong> {{ exam["time"] }}
+            </p>
+
+            <p>
+                🚪 <strong>Room:</strong> {{ exam["room"] }}
+            </p>
+
+            <p>
+                📋 <strong>Exam Type:</strong> {{ exam["exam_type"] }}
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+
+            <h3>No exams added yet</h3>
+
+            <p>
+                The examination timetable will appear here.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</main>
+
+</body>
+</html>

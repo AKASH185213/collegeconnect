@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Session Expiring - CollegeConnect</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <h1>⏰ Session Expiring</h1>
+    <p>Your faculty session is about to expire.</p>
+</header>
+
+<main>
+
+    <div class="form-box">
+
+        <h2>Do you want to continue?</h2>
+
+        <p>
+            Your session will expire soon.
+        </p>
+
+        <form method="POST" action="/continue-session">
+            <button type="submit">
+                Continue Session
+            </button>
+        </form>
+
+        <a href="/logout">
+            <button>
+                Logout
+            </button>
+        </a>
+
+    </div>
+
+</main>
+
+</body>
+</html>

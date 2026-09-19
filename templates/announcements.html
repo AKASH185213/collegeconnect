@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Announcements - CollegeConnect</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <h1>📢 Announcements</h1>
+    <p>Important college updates</p>
+</header>
+
+<main>
+
+    <a href="/" class="back">← Back to Dashboard</a>
+
+    <div class="announcement-header">
+        <h2>Latest Announcements</h2>
+
+        <a href="/add-announcement" class="add-button">
+            + Add Announcement
+        </a>
+    </div>
+
+    {% if announcements %}
+
+        {% for announcement in announcements %}
+
+        <div class="announcement">
+
+            <h3>📢 {{ announcement["title"] }}</h3>
+
+            <p>
+                {{ announcement["content"] }}
+            </p>
+
+            <small>
+                Posted by: {{ announcement["posted_by"] }}
+            </small>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+            <h3>No announcements yet</h3>
+            <p>New college announcements will appear here.</p>
+        </div>
+
+    {% endif %}
+
+</main>
+
+</body>
+</html>

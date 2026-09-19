@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Class Timetable - CollegeConnect</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <h1>🕐 Class Timetable</h1>
+    <p>Weekly class schedule</p>
+</header>
+
+<main>
+
+    <a href="/" class="back">
+        ← Back to Dashboard
+    </a>
+
+    <div class="announcement-header">
+
+        <h2>Weekly Timetable</h2>
+
+        {% if session.get("username") %}
+        <a href="/add-timetable" class="add-button">
+            + Add Class
+        </a>
+        {% endif %}
+
+    </div>
+
+    {% if timetable %}
+
+        {% for class in timetable %}
+
+        <div class="announcement">
+
+            <h3>📚 {{ class["subject"] }}</h3>
+
+            <p>
+                📅 <strong>Day:</strong> {{ class["day"] }}
+            </p>
+
+            <p>
+                🕐 <strong>Time:</strong> {{ class["time"] }}
+            </p>
+
+            <p>
+                👨‍🏫 <strong>Faculty:</strong> {{ class["faculty"] }}
+            </p>
+
+            <p>
+                🚪 <strong>Room:</strong> {{ class["room"] }}
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+
+            <h3>No timetable added yet</h3>
+
+            <p>
+                The class timetable will appear here.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</main>
+
+</body>
+</html>

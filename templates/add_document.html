@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Document - CollegeConnect</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .form-navigation {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .dashboard-back,
+        .section-back {
+            display: inline-block;
+            padding: 11px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .dashboard-back {
+            background: #0f766e;
+            color: white;
+        }
+
+        .section-back {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .dashboard-back:hover,
+        .section-back:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>📄 Add Document</h1>
+    <p>Upload an important college document link</p>
+</header>
+
+<main>
+
+    <div class="form-navigation">
+
+        <a href="/admin" class="dashboard-back">
+            ← Back to Faculty Dashboard
+        </a>
+
+        <a href="/documents" class="section-back">
+            View Documents
+        </a>
+
+    </div>
+
+    <div class="form-box">
+
+        <h2>Add College Document</h2>
+
+        <form method="POST">
+
+            <label>Document Title</label>
+
+            <input
+                type="text"
+                name="title"
+                placeholder="Example: R26 Regulations"
+                required
+            >
+
+            <label>Description</label>
+
+            <textarea
+                name="description"
+                placeholder="Describe the document..."
+                required
+            ></textarea>
+
+            <label>Document Link</label>
+
+            <input
+                type="url"
+                name="link"
+                placeholder="https://example.com/document.pdf"
+                required
+            >
+
+            <button type="submit">
+                Add Document
+            </button>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+</html>

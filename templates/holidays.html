@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Holidays - CollegeConnect</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <h1>🏖️ College Holidays</h1>
+    <p>College holiday schedule</p>
+</header>
+
+<main>
+
+    <a href="/" class="back">
+        ← Back to Dashboard
+    </a>
+
+    <div class="announcement-header">
+
+        <h2>Holiday List</h2>
+
+        {% if session.get("username") %}
+        <a href="/add-holiday" class="add-button">
+            + Add Holiday
+        </a>
+        {% endif %}
+
+    </div>
+
+    {% if holidays %}
+
+        {% for holiday in holidays %}
+
+        <div class="announcement">
+
+            <h3>🏖️ {{ holiday["name"] }}</h3>
+
+            <p>
+                📅 <strong>Date:</strong> {{ holiday["date"] }}
+            </p>
+
+            <p>
+                {{ holiday["description"] }}
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+
+            <h3>No holidays added yet</h3>
+
+            <p>
+                The college holiday list will appear here.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Documents - CollegeConnect</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <h1>📄 College Documents</h1>
+    <p>Important college documents</p>
+</header>
+
+<main>
+
+    <a href="/" class="back">
+        ← Back to Dashboard
+    </a>
+
+    <div class="announcement-header">
+
+        <h2>Documents</h2>
+
+        {% if session.get("username") %}
+        <a href="/add-document" class="add-button">
+            + Add Document
+        </a>
+        {% endif %}
+
+    </div>
+
+    {% if documents %}
+
+        {% for document in documents %}
+
+        <div class="announcement">
+
+            <h3>📄 {{ document["title"] }}</h3>
+
+            <p>
+                {{ document["description"] }}
+            </p>
+
+            <a href="{{ document['link'] }}" target="_blank">
+                <button>Open Document</button>
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+
+            <h3>No documents added yet</h3>
+
+            <p>
+                Important college documents will appear here.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</main>
+
+</body>
+</html>

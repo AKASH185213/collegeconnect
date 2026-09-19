@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Class - CollegeConnect</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .form-navigation {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .dashboard-back,
+        .section-back {
+            display: inline-block;
+            padding: 11px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .dashboard-back {
+            background: #0f766e;
+            color: white;
+        }
+
+        .section-back {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .dashboard-back:hover,
+        .section-back:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🕐 Add Class</h1>
+    <p>Add a class to the timetable</p>
+</header>
+
+<main>
+
+    <div class="form-navigation">
+
+        <a href="/admin" class="dashboard-back">
+            ← Back to Faculty Dashboard
+        </a>
+
+        <a href="/timetable" class="section-back">
+            View Timetable
+        </a>
+
+    </div>
+
+    <div class="form-box">
+
+        <h2>Create Class Schedule</h2>
+
+        <form method="POST">
+
+            <label>Day</label>
+
+            <select name="day" required>
+
+                <option value="">Select day</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+
+            </select>
+
+            <label>Time</label>
+
+            <input
+                type="time"
+                name="time"
+                required
+            >
+
+            <label>Subject</label>
+
+            <input
+                type="text"
+                name="subject"
+                placeholder="Example: Engineering Mathematics"
+                required
+            >
+
+            <label>Faculty</label>
+
+            <input
+                type="text"
+                name="faculty"
+                placeholder="Example: Mr. Kumar"
+                required
+            >
+
+            <label>Room</label>
+
+            <input
+                type="text"
+                name="room"
+                placeholder="Example: Room 203"
+                required
+            >
+
+            <button type="submit">
+                Add Class
+            </button>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+</html>
